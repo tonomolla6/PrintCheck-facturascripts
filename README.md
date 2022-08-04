@@ -1,1 +1,1 @@
-# PrintCheck-facturascripts
+# PrintChecker-facturascripts

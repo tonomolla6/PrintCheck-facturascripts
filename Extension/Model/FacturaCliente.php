@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PrintChecker plugin for FacturaScripts
- * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>
+ * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,28 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace FacturaScripts\Plugins\PrintChecker\Extension\Controller;
 
-use FacturaScripts\Core\Model\AlbaranCliente;
+namespace FacturaScripts\Plugins\PrintChecker\Extension\Model;
 
 /**
- * Description of ListAlbaranCliente
+ * Description of ListFacturaCliente.
  *
  * @author Tono Mollá González <mail@tonomolla.es>
  */
-class ListAlbaranCliente
+class FacturaCliente
 {
-    protected function execPreviousAction()
+    protected function saveInsert()
     {
-        return function ($action) {
-            if ($action === 'export' && $_POST["option"] == 'PDF') {
-                foreach($_POST['code'] as $id) {
-                    $albaran = new AlbaranCliente();
-                    $albaran->loadFromCode($id);
-                    $albaran->printed = true;
-                    $albaran->save();
-                }
-            }
+        return function (array $values = []): bool {
+            $this->printed = false;
+
+            return $this->save();
         };
     }
 }

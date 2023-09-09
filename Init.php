@@ -1,7 +1,7 @@
 <?php
 /**
- * This file is part of PrintCheck plugin for FacturaScripts
- * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>
+ * This file is part of PrintChecker plugin for FacturaScripts
+ * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,26 +16,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace FacturaScripts\Plugins\PrintCheck;
 
+namespace FacturaScripts\Plugins\PrintChecker;
+
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\InitClass;
+use FacturaScripts\Core\Model\PageOption;
 
 /**
- * Description of Init
+ * Description of Init.
  *
  * @author Tono Mollá González <mail@tonomolla.es>
  */
 class Init extends InitClass
 {
-
     public function init()
     {
+        // Controllers
         $this->loadExtension(new Extension\Controller\EditFacturaCliente());
         $this->loadExtension(new Extension\Controller\EditAlbaranCliente());
         $this->loadExtension(new Extension\Controller\ListFacturaCliente());
         $this->loadExtension(new Extension\Controller\ListAlbaranCliente());
+
+        // Models
+        $this->loadExtension(new Extension\Model\FacturaCliente());
     }
 
-    public function update() {
+    public function update()
+    {
+        // Delete old options
+        $where = [
+            new DataBaseWhere('name', 'EditFacturaCliente,EditAlbaranCliente,ListFacturaCliente,ListAlbaranCliente', 'IN'),
+        ];
+        foreach ((new PageOption())->all($where) as $value) {
+            $value->delete();
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PrintChecker plugin for FacturaScripts
- * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>.
+ * Copyright (C) 2024-2025 Tono Mollá González <mail@tonomolla.es>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -31,7 +31,9 @@ class ListFacturaCliente
     protected function execPreviousAction()
     {
         return function ($action) {
-            if ($action === 'export' && $_POST['option'] == 'PDF') {
+            $opcion = $_GET["option"] ?? $_POST["option"];
+
+            if ($action === 'export' && $opcion == 'PDF') {
                 foreach ($_POST['code'] as $id) {
                     $factura = new FacturaCliente();
                     $factura->loadFromCode($id);

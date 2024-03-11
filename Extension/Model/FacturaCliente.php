@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PrintChecker plugin for FacturaScripts
- * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>.
+ * Copyright (C) 2024-2025 Tono Mollá González <mail@tonomolla.es>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as

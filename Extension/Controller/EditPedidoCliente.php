@@ -30,7 +30,7 @@ class EditPedidoCliente
     protected function execPreviousAction()
     {
         return function ($action) {
-            $opcion = $_GET["option"] ?? $_POST["option"];
+            $opcion = isset($_GET["option"]) ? $_GET["option"] : (isset($_POST["option"]) ? $_POST["option"] : null);
 
             if ($action === 'export' && $opcion == 'PDF') {
                 $pedido = new PedidoCliente();

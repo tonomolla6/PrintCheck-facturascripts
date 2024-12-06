@@ -26,12 +26,12 @@ namespace FacturaScripts\Plugins\PrintChecker\Extension\Model;
  */
 class FacturaCliente
 {
-    protected function saveInsert()
-    {
-        return function (array $values = []): bool {
-            $this->printed = false;
+    // protected function saveInsert()
+    // {
+    //     return function (array $values = []): bool {
+    //         // $this->printed = false;
 
-            return $this->save();
-        };
-    }
+    //         // return $this->save();
+    //     };
+    // }
 }

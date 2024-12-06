@@ -27,17 +27,17 @@ use FacturaScripts\Core\Model\FacturaCliente;
  */
 class EditFacturaCliente
 {
-    protected function execPreviousAction()
-    {
-        return function ($action) {
-            $opcion = isset($_GET["option"]) ? $_GET["option"] : (isset($_POST["option"]) ? $_POST["option"] : null);
+    // protected function execPreviousAction()
+    // {
+    //     return function ($action) {
+    //         // $opcion = isset($_GET["option"]) ? $_GET["option"] : (isset($_POST["option"]) ? $_POST["option"] : null);
 
-            if ($action === 'export' && $opcion == 'PDF') {
-                $factura = new FacturaCliente();
-                $factura->loadFromCode($_GET["code"]);
-                $factura->printed = true;
-                $factura->save();
-            }
-        };
-    }
+    //         // if ($action === 'export' && $opcion == 'PDF') {
+    //         //     $factura = new FacturaCliente();
+    //         //     $factura->loadFromCode($_GET["code"]);
+    //         //     $factura->printed = true;
+    //         //     $factura->save();
+    //         // }
+    //     };
+    // }
 }

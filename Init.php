@@ -54,12 +54,40 @@ class Init extends InitClass
 
     public function update()
     {
-        // Delete old options
+        // Actualizar opciones existentes
         $where = [
-            new DataBaseWhere('name', 'EditFacturaCliente,EditAlbaranCliente,ListFacturaCliente,ListAlbaranCliente', 'IN'),
+            new DataBaseWhere('name', 'EditFacturaCliente,EditAlbaranCliente,ListFacturaCliente,ListAlbaranCliente,EditPedidoCliente,EditPresupuestoCliente,ListPedidoCliente,ListPresupuestoCliente', 'IN'),
         ];
-        foreach ((new PageOption())->all($where) as $value) {
-            $value->delete();
+        
+        foreach ((new PageOption())->all($where) as $pageOption) {
+            $columns = json_decode($pageOption->columns, true) ?? [];
+            
+            // Verificar si ya existe la columna printed
+            $hasPrinted = false;
+            if (!empty($columns)) {
+                foreach ($columns as $column) {
+                    if (isset($column['name']) && $column['name'] === 'printed') {
+                        $hasPrinted = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Añadir la columna printed si no existe
+            if (!$hasPrinted) {
+                $columns[] = [
+                    'name' => 'printed',
+                    'order' => '285',
+                    'display' => 'center',
+                    'widget' => [
+                        'type' => 'checkbox',
+                        'fieldname' => 'printed'
+                    ]
+                ];
+                
+                $pageOption->columns = json_encode($columns);
+                $pageOption->save();
+            }
         }
     }
 }

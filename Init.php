@@ -1,11 +1,7 @@
 <?php
 /**
  * This file is part of PrintChecker plugin for FacturaScripts.
-<<<<<<< HEAD
- * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>.
-=======
- * Copyright (C) 2022-2023 Tono Mollá González <mail@tonomolla.es>
->>>>>>> adf71f63099e648d51f7632c0a8a3df5658c89a7
+ * Copyright (C) 2022-2025 Tono Mollá González <hola@tonomolla.es>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -30,7 +26,7 @@ use FacturaScripts\Core\Model\PageOption;
 /**
  * Description of Init.
  *
- * @author Tono Mollá González <mail@tonomolla.es>
+ * @author Tono Mollá González <hola@tonomolla.es>
  */
 class Init extends InitClass
 {
@@ -41,9 +37,19 @@ class Init extends InitClass
         $this->loadExtension(new Extension\Controller\EditAlbaranCliente());
         $this->loadExtension(new Extension\Controller\ListFacturaCliente());
         $this->loadExtension(new Extension\Controller\ListAlbaranCliente());
+        
+        // Nuevos controllers
+        $this->loadExtension(new Extension\Controller\EditPedidoCliente());
+        $this->loadExtension(new Extension\Controller\EditPresupuestoCliente());
+        $this->loadExtension(new Extension\Controller\ListPedidoCliente());
+        $this->loadExtension(new Extension\Controller\ListPresupuestoCliente());
 
         // Models
         $this->loadExtension(new Extension\Model\FacturaCliente());
+        
+        // Nuevos models
+        $this->loadExtension(new Extension\Model\PedidoCliente());
+        $this->loadExtension(new Extension\Model\PresupuestoCliente());
     }
 
     public function update()

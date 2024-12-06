@@ -16,16 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Plugins\PrintChecker\Extension\Controller;
 
-use FacturaScripts\Core\Model\AlbaranCliente;
+use FacturaScripts\Core\Model\PedidoCliente;
 
-/**
- * Description of ListAlbaranCliente
- *
- * @author Tono Mollá González <hola@tonomolla.es>
- */
-class ListAlbaranCliente
+class ListPedidoCliente
 {
     protected function execPreviousAction()
     {
@@ -34,12 +30,12 @@ class ListAlbaranCliente
 
             if ($action === 'export' && $opcion == 'PDF') {
                 foreach($_POST['code'] as $id) {
-                    $albaran = new AlbaranCliente();
-                    $albaran->loadFromCode($id);
-                    $albaran->printed = true;
-                    $albaran->save();
+                    $pedido = new PedidoCliente();
+                    $pedido->loadFromCode($id);
+                    $pedido->printed = true;
+                    $pedido->save();
                 }
             }
         };
     }
-}
+} 

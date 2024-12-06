@@ -18,14 +18,14 @@
  */
 namespace FacturaScripts\Plugins\PrintChecker\Extension\Controller;
 
-use FacturaScripts\Core\Model\AlbaranCliente;
+use FacturaScripts\Core\Model\PresupuestoCliente;
 
 /**
- * Description of ListAlbaranCliente
+ * Description of EditPresupuestoCliente
  *
  * @author Tono Mollá González <hola@tonomolla.es>
  */
-class ListAlbaranCliente
+class EditPresupuestoCliente
 {
     protected function execPreviousAction()
     {
@@ -33,12 +33,10 @@ class ListAlbaranCliente
             $opcion = $_GET["option"] ?? $_POST["option"];
 
             if ($action === 'export' && $opcion == 'PDF') {
-                foreach($_POST['code'] as $id) {
-                    $albaran = new AlbaranCliente();
-                    $albaran->loadFromCode($id);
-                    $albaran->printed = true;
-                    $albaran->save();
-                }
+                $presupuesto = new PresupuestoCliente();
+                $presupuesto->loadFromCode($_GET["code"]);
+                $presupuesto->printed = true;
+                $presupuesto->save();
             }
         };
     }

@@ -22,6 +22,7 @@ namespace FacturaScripts\Plugins\PrintChecker;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\InitClass;
 use FacturaScripts\Core\Model\PageOption;
+use FacturaScripts\Core\Base\ToolBox;
 
 /**
  * Description of Init.
@@ -60,33 +61,43 @@ class Init extends InitClass
         ];
         
         foreach ((new PageOption())->all($where) as $pageOption) {
-            $columns = json_decode($pageOption->columns, true) ?? [];
+            print_r("Contenido original: ");
+            print_r($pageOption->columns);
             
-            // Verificar si ya existe la columna printed
-            $hasPrinted = false;
-            if (!empty($columns)) {
-                foreach ($columns as $column) {
-                    if (isset($column['name']) && $column['name'] === 'printed') {
-                        $hasPrinted = true;
-                        break;
-                    }
-                }
-            }
+            // Decodificar el JSON existente si es una cadena
+            $columns = is_string($pageOption->columns) ? 
+                      json_decode($pageOption->columns, true) : 
+                      $pageOption->columns;
             
-            // Añadir la columna printed si no existe
-            if (!$hasPrinted) {
-                $columns[] = [
+            // Solo añadir si no existe
+            if (!isset($columns['printed'])) {
+                // Mantener todas las columnas existentes y añadir la nueva
+                $columns['printed'] = [
+                    'tag' => 'column',
+                    'children' => [
+                        [
+                            'tag' => 'widget',
+                            'children' => [],
+                            'type' => 'checkbox',
+                            'fieldname' => 'printed',
+                            'readonly' => 'false',
+                            'decimal' => null
+                        ]
+                    ],
                     'name' => 'printed',
                     'order' => '285',
                     'display' => 'center',
-                    'widget' => [
-                        'type' => 'checkbox',
-                        'fieldname' => 'printed'
-                    ]
+                    'text' => "\n            \n        ",
+                    'level' => '0',
+                    'numcolumns' => '0'
                 ];
                 
-                $pageOption->columns = json_encode($columns);
+                // Guardar de vuelta
+                $pageOption->columns = $columns;
                 $pageOption->save();
+                
+                print_r("Después de añadir printed: ");
+                print_r($pageOption->columns);
             }
         }
     }

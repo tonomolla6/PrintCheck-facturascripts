@@ -21,11 +21,12 @@ namespace FacturaScripts\Plugins\PrintChecker\Extension\Model;
 
 class PedidoCliente
 {
-    protected function saveInsert()
+    protected function saveInsertBefore()
     {
         return function (array $values = []): bool {
             $this->printed = false;
-            return $this->save();
+
+            return true;
         };
     }
 } 
